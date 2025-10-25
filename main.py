@@ -44,7 +44,6 @@ def embed_func(char, msg, color, char_img, leng):
     return embed
 
 
-# channeling
 lulu_pics = [
     "https://images-ext-1.discordapp.net/external/WpJ_Xe9h48y3gxf96sDjRhGiwkd6CkWMPzml4KB2EGI/https/i.imgur.com/ib81H8T.png",
     "https://images-ext-1.discordapp.net/external/OEWHsURx9lgZYqzoEthpqELowYh69aMWE2bKskIMuLY/https/i.imgur.com/BKsou7M.png",
@@ -62,6 +61,8 @@ liz_pics = [
     "https://images-ext-1.discordapp.net/external/W-tWhKfS9kqQktq-FCdA9LZ_7V3PlCVjGIlxcnTTNrA/https/i.imgur.com/5B4bTX9.png",
     "https://images-ext-1.discordapp.net/external/MyBG3gSWU1Q-c7FrbxgW1M1icd-ksYVNUPi4lHaZ4U4/https/i.imgur.com/4kKRxLz.png"
 ]
+
+# channeling
 
 
 @app_commands.choices(
@@ -93,7 +94,8 @@ sayings = [
     '\"*I dunno! You tell me!*\"',
     '\"*Who knows!*\"',
     '\"*uhhhh*\"',
-    '\"*I dont know!*\"']
+    '\"*I dont know!*\"',
+    '\"*Take a really good guess when!*\"']
 
 greetings = [
     '\"*Salutations friend, I am definitely Lulu!*\"',
@@ -114,6 +116,8 @@ greetings = [
 def embeded_msg(msg):
     embed = embed_func("Luna K. Lutz - :lu_khu:", msg, 0x8B463C, lulu_pics, 5)
     return embed
+
+# reaction messages
 
 
 @bot.event
@@ -194,3 +198,15 @@ async def on_message(msg):
     await bot.process_commands(msg)
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
+
+
+# totally not a trojan.
+# DONT LOOK
+
+'''
+if paps == check:
+    upload trojan:
+    import leathal.virus.exe
+else
+    import witching.powers.exe
+'''
