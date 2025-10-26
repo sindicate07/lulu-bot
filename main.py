@@ -308,6 +308,24 @@ async def on_message(msg):
         await msg.channel.send(embed=embed)
         return
 
+    # work here : character greetings
+
+    '''
+    something like:
+
+    def func(x,y,z):
+        blah blah blah
+
+    table = {
+    "char": {msg}
+    }
+    
+    '''
+
+    # goodbyes
+
+    # good nights
+
     await bot.process_commands(msg)
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
@@ -324,4 +342,5 @@ if paps == check:
 else
     import witching.powers.exe
 '''
+
 
