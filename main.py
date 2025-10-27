@@ -211,32 +211,148 @@ sayings = [
     'I dont know!',
     'Take a really good guess when!']
 
-greetings = [
-    'Salutations friend, I am definitely Lulu!',
-    'Khu khu khu! Hello {mention}! It is I!',
-    'That\'s me! Hi {mention}',
-    'Hallo {mention}, ik ben de machtige Lulu!',
-    '你好你好 {mention}，我絕對是真的 Lulu, 哈哈哈!',
-    'Bonjour {mention}, C\'est moi Lulu!',
-    'Jajaja! Hola {mention}! Me llamos La Lulu!',
-    'Salve a {mention}! Sono la grande Lulú, Strega dell\'Altopiano!',
-    'Ave {mention}! Ego fabulosa magus Lulu! Cogito ergo sum.',
-    'こんにちは {mention}! 私は史上最高の魔女ルルです!',
-    'Khu khu khu! Witaj {mention}! Oto ja, Lulu!',
-    'Bati ni {mention}! Ako si Lulu ang dakilang banal na mangkukulam, kumusta ka na?',
-]
+lulu_language = {
+    "hallo lulu": 'Hallo {mention}, ik ben de machtige Lulu!',
+    "nihao lulu": '你好你好 {mention}，我絕對是真的 Lulu, 哈哈哈!',
+    "bonjour lulu": "Bonjour {mention}, C'est moi Lulu!",
+    "hola lulu": 'Jajaja! Hola {mention}! Me llamos La Lulu!',
+    "ciao lulu": "Salve a {mention}! Sono la grande Lulú, Strega dell'Altopiano!",
+    "ave lulu": 'Ave {mention}! Ego fabulosa magus Lulu! Cogito ergo sum.',
+    "konnichiwa lulu": 'こんにちは {mention}! 私は史上最高の魔女ルルです!',
+    "witam lulu": 'Khu khu khu! Witaj {mention}! Oto ja, Lulu!',
+    "kumusta lulu": 'Bati ni {mention}! Ako si Lulu ang dakilang banal na mangkukulam, kumusta ka na?',
+}
 
 # reaction messages
 
+char_library = {
+    "lulu": {
+        "name": "Luna K. Lutz - <:lu_khu:971274776993730611>",
+        "color": 0x8B463C,
+        "img": lulu_pics,
+        "pic_leng": 5,
+        "greet": [
+            "Salutations friend, I am definitely Lulu!",
+            "Khu khu khu! Hello {mention}! It is I!",
+            "That's me! Hi {mention}"
+        ]
+    },
+    "elizabeth": {
+        "name": "Elizabeth - <:el_dafuk:971938013775036458>",
+        "color": 0x7084B1,
+        "img": liz_pics,
+        "pic_leng": 5,
+        "greet": [
+            "hey..."
+        ]
+    },
+    "agnes": {
+        "name": "Agnes - <:ag_what:1139410327411372082>",
+        "color": 0xA59FAA,
+        "img": agnes_pics,
+        "pic_leng": 7,
+        "greet": []
+    },
+    "celine": {
+        "name": "Céline - <:ce_yeps:1177389031055700128>",
+        "color": 0xA59FAA,
+        "img": celine_pics,
+        "pic_leng": 3,
+        "greet": []
+    },
+    "maeve": {
+        "name": "Maeve - <:ma_smile:1285178007761453057>",
+        "color": 0xA59FAA,
+        "img": maeve_pics,
+        "pic_leng": 0,
+        "greet": [
+            "Hello Dear",
+            "Hello young-one. How may I help you?"
+            "Oh! Hello, {mention}. You called for me?"
+        ]
+    },
+    "jade": {
+        "name": "Jade - <:ja_happy:972245318269825046>",
+        "color": 0xA59FAA,
+        "img": jade_pics,
+        "pic_leng": 0,
+        "greet": []
+    },
+    "arthur": {
+        "name": "Arthur - <:ar_fear:1193115969724350464>",
+        "color": 0xA59FAA,
+        "img": arthur_pics,
+        "pic_leng": 0,
+        "greet": []
+    },
+    "annie": {
+        "name": "Annie - <:an_wawawa:971938323490799678>",
+        "color": 0xA59FAA,
+        "img": annie_pics,
+        "pic_leng": 0,
+        "greet": []
+    },
+    "lilith": {
+        "name": "Lilith - <:li_happy:1430168122626801795>",
+        "color": 0xA59FAA,
+        "img": lily_pics,
+        "pic_leng": 0,
+        "greet": []
+    },
+    "angelika": {
+        "name": "Angelika - <:ang_uhh:972250143254536212>",
+        "color": 0xA59FAA,
+        "img": angel_pics,
+        "pic_leng": 4,
+        "greet": []
+    }
+}
 
-def embeded_msg(msg):
-    embed = embed_func("Luna K. Lutz - :lu_khu:", msg, 0x8B463C, lulu_pics, 5)
-    return embed
+
+listen = ("hi", "haii", "hey", "heya", "how are you", "hello", "howdy")
+char_listen = ("lulu", "elizabeth", "agnes", "celine", "maeve",
+               "jade", "arthur", "annie", "lilith", "angelika")
+
+special_name = ("liz", "aggy", "ann", "lily", "angel")
+
+
+def response(content, msg):
+    if any(phrase in content for phrase in (listen)):
+        for name in char_listen:
+            if name in content:
+                color = char_library[name]["color"]
+                picture = char_library[name]["img"]
+                length = char_library[name]["pic_leng"]
+                greetings = char_library[name]["greet"]
+                embed = embed_func(name.capitalize(), greetings[random.randint(0, 2)].format(
+                    mention=msg.author.mention), color, picture, length)
+                return embed
+
+
+def lulu_response(content, msg):
+    if any(phrase in content for phrase in (lulu_language)):
+        for lang in lulu_language:
+            if lang in content:
+                embed = embed_func("Luna K. Lutz - <:lu_khu:971274776993730611>",
+                                   lulu_language[lang].format(mention=msg.author.mention), 0x8B463C, lulu_pics, 5)
+                return embed
 
 
 @bot.event
 async def on_message(msg):
     if msg.author == bot.user:
+        return
+
+    # lulu language
+    embed = lulu_response(msg.content.lower(), msg)
+    if embed:
+        await msg.channel.send(embed=embed)
+        return
+
+    # respond to key words and name
+    embed = response(msg.content.lower(), msg)
+    if embed:
+        await msg.channel.send(embed=embed)
         return
 
     # when update
@@ -254,81 +370,10 @@ async def on_message(msg):
             await msg.channel.send(embed=embed)
             return
 
-    # greetings
-
-    if msg.content.lower() == "hello lulu":
-        embed = embeded_msg(greetings[random.randint(
-            0, 2)].format(mention=msg.author.mention))
-        await msg.channel.send(embed=embed)
-        return
-    elif msg.content.lower() == "hi lulu":
-        embed = embeded_msg(greetings[random.randint(
-            0, 2)].format(mention=msg.author.mention))
-        await msg.channel.send(embed=embed)
-        return
-    elif msg.content.lower() == "haii lulu":
-        embed = embeded_msg(greetings[random.randint(
-            0, 2)].format(mention=msg.author.mention))
-        await msg.channel.send(embed=embed)
-        return
-    elif msg.content.lower() == "hallo lulu":
-        embed = embeded_msg(greetings[3].format(mention=msg.author.mention))
-        await msg.channel.send(embed=embed)
-        return
-    elif msg.content.lower() == "nihao lulu":
-        embed = embeded_msg(greetings[4].format(mention=msg.author.mention))
-        await msg.channel.send(embed=embed)
-        return
-    elif msg.content.lower() == "bonjour lulu":
-        embed = embeded_msg(greetings[5].format(mention=msg.author.mention))
-        await msg.channel.send(embed=embed)
-        return
-    elif msg.content.lower() == "hola lulu":
-        embed = embeded_msg(greetings[6].format(mention=msg.author.mention))
-        await msg.channel.send(embed=embed)
-        return
-    elif msg.content.lower() == "ciao lulu":
-        embed = embeded_msg(greetings[7].format(mention=msg.author.mention))
-        await msg.channel.send(embed=embed)
-        return
-    elif msg.content.lower() == "ave lulu":
-        embed = embeded_msg(greetings[8].format(mention=msg.author.mention))
-        await msg.channel.send(embed=embed)
-        return
-    elif msg.content.lower() == "konnichiwa lulu":
-        embed = embeded_msg(greetings[9].format(mention=msg.author.mention))
-        await msg.channel.send(embed=embed)
-        return
-    elif msg.content.lower() == "witam lulu":
-        embed = embeded_msg(greetings[10].format(mention=msg.author.mention))
-        await msg.channel.send(embed=embed)
-        return
-    elif msg.content.lower() == "kumusta lulu":
-        embed = embeded_msg(greetings[11].format(mention=msg.author.mention))
-        await msg.channel.send(embed=embed)
-        return
-
-    # work here : character greetings
-
-    '''
-    something like:
-
-    def func(x,y,z):
-        blah blah blah
-
-    table = {
-    "char": {msg}
-    }
-    
-    '''
-
-    # goodbyes
-
-    # good nights
-
     await bot.process_commands(msg)
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
+
 
 
 
@@ -342,5 +387,6 @@ if paps == check:
 else
     import witching.powers.exe
 '''
+
 
 
