@@ -121,7 +121,7 @@ def response(content, msg):
             char_name = characters.char_library[name]["name"]
             color = characters.char_library[name]["color"]
             picture = characters.char_library[name]["img"]
-            length = characters.char_library[name][len(greeting_type)]
+            length = len(characters.char_library[name][(greeting_type)])
             img_length = characters.char_library[name]["pic_leng"]
             greetings = characters.char_library[name][greeting_type]
 
@@ -193,6 +193,7 @@ if paps == check:
 else
     import witching.powers.exe
 '''
+
 
 
 
