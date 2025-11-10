@@ -13,6 +13,7 @@ lily_pics = pics.lily_pics
 angel_pics = pics.angel_pics
 dahlia_pics = pics.dahlia_pics
 elena_pics = pics.elena_pics
+molly_pics = pics.molly_pics
 
 # character dialouge
 char_library = {
@@ -39,7 +40,7 @@ char_library = {
         "Me when.",
         "I dunno! You tell me!",
         "Who knows!",
-        "Khu, khu, khu! Only my all see eye knows! And I won't tell you!",
+        "Khu, khu, khu! Only I know because of my all seeing eye! And I won't tell you!",
         "I don't know.",
         "Maybe Miss Jade knows!",
         "Maybe Miss Elizabeth knows!",
@@ -50,7 +51,7 @@ char_library = {
         "Maybe Miss Agnes knows!"
     ]
     },
-    "elizabeth": {"name": "Elizabeth - <:el_dafuk:971938013775036458>", "color": 0x7084B1, "img": liz_pics, "pic_leng": 5, "greet": [
+    "elizabeth": {"name": "Elizabeth - <:el_dafuk:971938013775036458>", "color": 0x7084B1, "img": liz_pics, "pic_leng": 8, "greet": [
         "What.",
         "Did you need something?",
         "Could you not bother me?",
@@ -109,7 +110,7 @@ char_library = {
         "I'll tell you if you'll be my one and only."
     ]
     },
-    "celine": {"name": "Céline - <:ce_yeps:1177389031055700128>", "color": 0x21686A, "img": celine_pics, "pic_leng": 3, "greet": [
+    "celine": {"name": "Céline - <:ce_yeps:1177389031055700128>", "color": 0x21686A, "img": celine_pics, "pic_leng": 16, "greet": [
         "Can you keep a secret?",
         "Wanna be my test subject?",
         "Hey, my dear test subject.",
@@ -244,8 +245,8 @@ char_library = {
     ], "updt": [
         "Listen kid. I already have a lot on my plate. You could ask around, but im busy as of right now.",
         "Try being a bit more patient. Thank you.",
-        "If I knew I would have let you guys know.",
-        "Maybe you should focus on your homework rather than things that will come later on.",
+        "If I knew, I would have let you guys know.",
+        "Maybe you should focus on your homework rather than things that will come soon.",
         "{mention}, I really don't know what to tell you, but I'm sure they're trying their best."
     ]
     },
@@ -261,7 +262,7 @@ char_library = {
     ], "nick": [
         "?",
         "That's new.",
-        "Excuse me."
+        "Excuse you."
     ], "updt": [
         "Curious. Well, I think they're working as fast as they can.",
         "Im not to sure. But aleast Hatchet's room is nice and tidy. Would you like me to clean yours too?",
@@ -301,10 +302,37 @@ char_library = {
         "I was told the development got backed up at the elvish civilization. Seems like we need a bit longer. This shouldn't worry you though!",
         "Rather than focusing on such meaningless thoughts, perhaps you would like to come to the elvish civilization?"
     ]
+    },
+    "mollybot": {"name": "MollyBot - <:mollybot:1200692143803617393>", "color": 0xffec9b, "img": molly_pics, "pic_leng": 2, "greet": [
+        "A Pleasure, {mention}.",
+        "Would You Like A Cookie?",
+        "Weird {mention} Equals Lots Of Fun.",
+        "Calculating {mention} Charisma... {value} Percent.",
+        "Error"
+    ], "bye": [
+        "Variable Cookie Gift Set To False. The Way Of The Cookie Has Been Lost.",
+        "Goodbye, {mention}",
+        "Shutting Down...",
+        "Error"
+    ], "updt": [
+        "Scanning Multiple Sources... No Data Found For \"Update.\"",
+        "Loading...",
+        "Data Unavailable.",
+        "Update In... {value} Weeks.",
+        "Error",
+        "The Update Is {value}% Completed.",
+        "Playing Voice Recording - \"Perhaps in a couple of months! developing technology isn't as easy as it seems.\"",
+        "Playing Voice Recording - \"Take a really good guess when!\"",
+        "Playing Voice Recording - \"It's statistically unlikely that it will come out soon\"",
+        "Playing Voice Recording - \"Currently working on it... do give us some more time!\"",
+        "Playing Voice Recording - \"...\"",
+        "Playing Voice Recording - Failed To Retrieve Data.",
+    ]
     }
 }
 
 lulu_language = {
+    "pneumoultamicroscopivolcaniosis": "OMG {mention}! It's so big! <:lu_khu:971274776993730611>",
     "hallo lulu": 'Hallo {mention}, ik ben de machtige Lulu!',
     "nihao lulu": '你好你好 {mention}，我絕對是真的 Lulu, 哈哈哈!',
     "bonjour lulu": "Bonjour {mention}, C'est moi Lulu!",
@@ -313,6 +341,13 @@ lulu_language = {
     "ave lulu": 'Ave {mention}! Ego fabulosa magus Lulu! Cogito ergo sum.',
     "konnichiwa lulu": 'こんにちは {mention}! 私は史上最高の魔女ルルです!',
     "witam lulu": 'Khu khu khu! Witaj {mention}! Oto ja, Lulu!',
-    "kumusta lulu": 'Bati ni {mention}! Ako si Lulu ang dakilang banal na mangkukulam, kumusta ka na?'
+    "kumusta lulu": 'Bati ni {mention}! Ako si Lulu ang dakilang banal na mangkukulam, kumusta ka na?',
+    "beannachdan lulu": 'Fàilte {mention}, Is mise a th\' ann, Lulu mhòr! Ciamar a tha thu?',
+    "habari lulu": 'habari {mention}! Mimi ni Lulu! Mchawi Mtakatifu wa Milima ya Nyanda za Juu. Nimefurahi kukutana nawe!',
+    "guten tag lulu": 'khu khu khu. Ich bin\'s, die einzigartige Lulu! Maeves beste Schülerin! Wie geht es dir, {mention}?',
+    "privet lulu": 'Приветствую, товарищ, {mention}! Ты ищешь мудрости y Великой Lulu? Или ты хотел чего-то другого?',
+    "ola lulu": 'Ah, {mention}! Sou eu, Lulu! Veio conversar com uma pessoa tão incrível quanto eu?',
+    "namaste lulu": 'haahaaha, {mention}! kya tumhen sabase mahaan aur sabase shaktishaalee lulu se kuchh chaahie tha? main tumhaare kisee bhee savaal ka javaab de sakata hoon!',
+    "mrhban lulu": 'ah! hal targhab bialtawasul mae lulu aleazimati? ah, \'ajal {mention}! lak mutlaq alhuriyat fi suaali ean \'ayi shay\'in!',
+    "annyeonghaseyo lulu": '하하하 {mention}! 여기서 뵙게 되어 반갑습니다! Lulu님, 그레이트를 보러 오셨나요? 무슨 생각 드시나요?'
 }
-# Scots, swahili, Lesbianese
