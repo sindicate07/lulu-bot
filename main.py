@@ -10,8 +10,7 @@ import characters
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
 
-handler = logging.FileHandler(
-    filename='discord.log', encoding='utf-8', mode='w')
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
@@ -96,38 +95,59 @@ async def channel(interaction: discord.Interaction, character: app_commands.Choi
     await interaction.channel.send(embed=embed)
 
 # reaction messages
-char_listen = ("lulu", "elizabeth", "agnes", "celine", "maeve",
-               "jade", "arthur", "annie", "lilith", "angelika", "dahlia", "elena")
-special_name = ("liz", "aggy", "ann", "lily", "angel",
-                "lulu the booboo", "four eyes")
+char_nicknames = {
+    "lulu": ["lulu the booboo"],
+    "elizabeth": ["liz", "four eyes"],
+    "agnes": ["aggy"],
+    "celine": [],
+    "maeve": [],
+    "jade": [],
+    "arthur": [],
+    "annie": ["ann"],
+    "lilith": ["lily"],
+    "angelika": ["angel"],
+    "dahlia": [],
+    "elena": []
+}
 listen = ("hii", "haii", "hey", "how are you", "hello", "howdy", "greetings")
 bye_listen = ("bye", "goodbye", "take care", "see you later",
               "see ya", "later", "cya", "night", "farewell")
-updt_listen = ("when update", "update when", "when is the update", "is the update out", "is update out", "update out yet", "updated yet", "is it updated", "has it updated", "did the update", "update soon", "update coming", "update plz", "update pls", "when patch", "patch when", "is there an update", "did update come out", "has the update come out", "update come yet", "new update when", "new patch when", "did they update", "have they updated", "update already", "bro update when", "still no update", "update now")
+updt_listen = ("when update", "update when", "when is the update", "is the update out", "is update out",
+               "update out yet", "updated yet", "is it updated", "has it updated", "did the update", "update soon", "update coming", "update plz", "update pls", "when patch", "patch when", "is there an update", "did update come out", "has the update come out", "update come yet", "new update when", "new patch when", "did they update", "have they updated", "update already", "bro update when", "still no update", "update now")
+
+
+def get_name(content: str):
+    msg = content.lower()
+    for name, nickname in char_nicknames.items():
+        if name in msg:
+            return name
+        for nick in nickname:
+            if nick in msg:
+                return name
+    return None
 
 
 def response(content, msg):
-    if any(phrase in content for phrase in listen):
+    if any(nick and nick in content for values in char_nicknames.values() for nick in values):
+        greeting_type = "nick"
+    elif any(phrase in content for phrase in listen):
         greeting_type = "greet"
     elif any(phrase in content for phrase in bye_listen):
         greeting_type = "bye"
-    elif any(phrase in content for phrase in special_name):
-        greeting_type = "nick"
     else:
         return
 
-    for name in char_listen:
-        if name in content:
-            char_name = characters.char_library[name]["name"]
-            color = characters.char_library[name]["color"]
-            picture = characters.char_library[name]["img"]
-            length = len(characters.char_library[name][(greeting_type)])
-            img_length = characters.char_library[name]["pic_leng"]
-            greetings = characters.char_library[name][greeting_type]
+    name = get_name(content)
+    char_name = characters.char_library[name]["name"]
+    color = characters.char_library[name]["color"]
+    picture = characters.char_library[name]["img"]
+    length = len(characters.char_library[name][(greeting_type)])
+    img_length = characters.char_library[name]["pic_leng"]
+    greetings = characters.char_library[name][greeting_type]
 
-            embed = embed_func(char_name, greetings[random.randint(0, length)].format(
-                mention=msg.author.mention), color, picture, img_length)
-            return embed
+    embed = embed_func(char_name, greetings[random.randint(0, length)].format(
+        mention=msg.author.mention), color, picture, img_length)
+    return embed
 
 
 def lulu_response(content, msg):
@@ -143,14 +163,13 @@ def lulu_response(content, msg):
 
 def updt_response(content, msg):
     if any(phrase in content for phrase in updt_listen):
-        name = char_listen[random.randint(0, 11)]
+        name = random.choice(list(char_nicknames.keys()))
         char_name = characters.char_library[name]["name"]
         color = characters.char_library[name]["color"]
         picture = characters.char_library[name]["img"]
         img_length = characters.char_library[name]["pic_leng"]
         length = len(characters.char_library[name]["updt"])
         greetings = characters.char_library[name]["updt"]
-
         embed = embed_func(char_name, greetings[random.randint(0, length)].format(
             mention=msg.author.mention), color, picture, img_length)
         return embed
@@ -183,6 +202,7 @@ async def on_message(msg):
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
 
+
 # totally not a trojan.
 # DONT LOOK
 
@@ -193,6 +213,7 @@ if paps == check:
 else
     import witching.powers.exe
 '''
+
 
 
 
