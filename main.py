@@ -6,11 +6,13 @@ from dotenv import load_dotenv
 import os
 import random
 import characters
+import re
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
 
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler = logging.FileHandler(
+    filename='discord.log', encoding='utf-8', mode='w')
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
@@ -75,7 +77,8 @@ def Char_handler(content, name, speech, color, img, img_leng):
         app_commands.Choice(name="Lilith", value="lilith"),
         app_commands.Choice(name="Angelika", value="angelika"),
         app_commands.Choice(name="Dahlia", value="dahlia"),
-        app_commands.Choice(name="Elena", value="elena")
+        app_commands.Choice(name="Elena", value="elena"),
+        app_commands.Choice(name="MollyBot", value="mollybot")
     ]
 )
 @bot.tree.command(name="channel", description="Speak their tounge")
@@ -107,7 +110,8 @@ char_nicknames = {
     "lilith": ["lily"],
     "angelika": ["angel"],
     "dahlia": [],
-    "elena": []
+    "elena": [],
+    "mollybot": []
 }
 listen = ("hii", "haii", "hey", "how are you", "hello", "howdy", "greetings")
 bye_listen = ("bye", "goodbye", "take care", "see you later",
@@ -120,15 +124,16 @@ def get_name(content: str):
     msg = content.lower()
     for name, nickname in char_nicknames.items():
         if name in msg:
-            return name
+            return name, None
         for nick in nickname:
             if nick in msg:
-                return name
-    return None
+                return name, nick
+    return None, None
 
 
 def response(content, msg):
-    if any(nick and nick in content for values in char_nicknames.values() for nick in values):
+    name, nick = get_name(content)
+    if nick and re.search(rf"\b{re.escape(nick)}\b", content):
         greeting_type = "nick"
     elif any(phrase in content for phrase in listen):
         greeting_type = "greet"
@@ -137,7 +142,6 @@ def response(content, msg):
     else:
         return
 
-    name = get_name(content)
     char_name = characters.char_library[name]["name"]
     color = characters.char_library[name]["color"]
     picture = characters.char_library[name]["img"]
@@ -146,7 +150,7 @@ def response(content, msg):
     greetings = characters.char_library[name][greeting_type]
 
     embed = embed_func(char_name, greetings[random.randint(0, length)].format(
-        mention=msg.author.mention), color, picture, img_length)
+        mention=msg.author.mention, value=random.randint(0, 99)), color, picture, img_length)
     return embed
 
 
@@ -171,7 +175,7 @@ def updt_response(content, msg):
         length = len(characters.char_library[name]["updt"])
         greetings = characters.char_library[name]["updt"]
         embed = embed_func(char_name, greetings[random.randint(0, length)].format(
-            mention=msg.author.mention), color, picture, img_length)
+            mention=msg.author.mention, value=random.randint(0, 99)), color, picture, img_length)
         return embed
 
 
@@ -203,6 +207,7 @@ async def on_message(msg):
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
 
 
+
 # totally not a trojan.
 # DONT LOOK
 
@@ -213,6 +218,7 @@ if paps == check:
 else
     import witching.powers.exe
 '''
+
 
 
 
