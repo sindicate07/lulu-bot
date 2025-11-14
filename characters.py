@@ -108,6 +108,26 @@ char_library = {
         "Your nonsense can be taken anywhere but here",
         "Get out. Now.",
         "I'll tell you if you'll be my one and only."
+    ], "teach": [
+        "Come on kiddo. Make me a potion so I can go home already.",
+        "Why don't you try making that explosion potion again?",
+        "They told me to cover for today. Why dont you make a sleeping potion?",
+        "Alright you punks. Make me a potion. Any will do.",
+        "Ah, for today's homework. Err... A demon repellent is due by the end of tommorow. Good luck!",
+        "Great... Maeve asked me to teach you morons again. Out of curtesy, a antidote is due by the end of today.",
+        "Yeah, yeah. You know the drill you brat. Make me anything. I got places to be today.",
+        "I wonder if you guys can brew wine...?",
+        "Make something useful for today, so I can put it up for sale."
+    ], "failed": [
+        "Ugh... I dont even know why I bother.",
+        "Good job! Now make me another. <:ag_what:1139410327411372082>",
+        "You ##### ####### #####!",
+        "Seriously? This is the best that Maeve's students have to offer?",
+        "You bring us witches to shame. Try again.",
+        "Wow. You made a absolute mess! Great job.",
+        "...",
+        "I dont get payed enough for your failures. Try again.",
+        "Mess up again and I'm going to curse you!"
     ]
     },
     "celine": {"name": "Céline - <:ce_yeps:1177389031055700128>", "color": 0x21686A, "img": celine_pics, "pic_leng": 16, "greet": [
@@ -130,6 +150,29 @@ char_library = {
         "Hmmm... maybe after my studies, I can look into it for you.",
         "Currently working on it... do give us some more time!",
         "Hey MollyBot, When is it coming? ...MollyBot?"
+    ], "teach": [
+        "Hey, why don't you try making a healing potion? That would be very helpful!",
+        "You could use my ingredient mixer, XI0021, to make your potions easier.",
+        "Could you make me a potion I can use on Ar- my gui- test subject?",
+        "I will be developing potions alongside you guys today! Be sure to reel in some results!",
+        "They asked me to cover today's potion mixing lesson. How about we make some potions that make you drowsy?",
+        "I will be examining your guys' technique with handling dangerous substances! Maeve doesn't want you guys getting hurt so... Be careful!",
+        "Mmm... Mhm... Ah...! I want 15 potions done by today. How does that sound everyone?",
+        "Maeve said no machinery so we have to do this the old fashioned way. Obviously I already premade mine. If you can match it's color, you pass!"
+    ], "failed": [
+        "What a disaster! Luckily the classroom didn't blow up!",
+        "Aww, don't worry about messing up. I mess up my potions all the time too.",
+        "You can always try again!",
+        "So close. Come on, I need that potion for my tests!",
+        "Nice attempt. I would suggest using the other ingredent for that mix.",
+        "Just a couple adjustments and you be good!",
+        "Hmm... I should take notes on how badly you messed up.",
+        "And the desk is on fire... Moll- Err... Let me find some water.",
+        "Careful, that mixture could melt your skin!",
+        "Careful, that mixture could blow up!"
+        "Careful, that mixture could create toxic fumes that can cause you to asphyxiate!",
+        "Careful, that mixture could... Wait, that is new! I must study this reaction!",
+        "Careful, that mixture could kill you if you're not careful about handeling!"
     ]
     },
     "maeve": {"name": "Maeve - <:ma_smile:1285178007761453057>", "color": 0x4C2F35, "img": maeve_pics, "pic_leng": 7, "greet": [
@@ -151,6 +194,26 @@ char_library = {
         "I've asked Céline and it seems like she is still working hard at it.",
         "Our hands are full right now, dear. Do give us more time. Thank you.",
         "Good news! It is being worked on!"
+    ], "teach": [
+        "Miss Lilith is out sick for today and I will be covering today's lesson. Let's get started with the basics. Growth potions for plants!",
+        "Today I will be covering for Miss Lilith and rather than staying in all day, how about we all forge materials potions?",
+        "Ah, a potion that promotes body wellness would be nice. Maybe something for strength recovery.",
+        "Celine! Please put that away! We talked about this, I can't have the students relying on such things.",
+        "Hmm... It says here you can make a love potion. Interesting... Anyways lets continue with the lesson.",
+        "Good day, young ones! How about another potion mixing lesson?",
+        "Maybe you guys can suprise me today with a potion you came up with! I will be here all day."
+    ], "failed": [
+        "O-Oh... It's okay young one. We all mess up here and there.",
+        "Ah. It's okay. You can always remake it!",
+        "Err... I'm not sure why that happened. You could try a different mix!",
+        "GAH! STAY CALM! I WILL CONTROL THIS FIRE!",
+        "Sigh... Where are you when I need you Lilith...",
+        "Oh. Im sure it will be fine right?",
+        "Careful!! Celine told me that it can explode in your face!",
+        "Ah. It's okay. After all, it is a learning curve.",
+        "Hmm... Lets check the textbook to see what went wrong.",
+        "That is definitely, not a potion...",
+        "Mmm... I failed you as a teacher..."
     ]
     },
     "jade": {"name": "Jade - <:ja_happy:972245318269825046>", "color": 0x8E624D, "img": jade_pics, "pic_leng": 9, "greet": [
@@ -248,6 +311,28 @@ char_library = {
         "If I knew, I would have let you guys know.",
         "Maybe you should focus on your homework rather than things that will come soon.",
         "{mention}, I really don't know what to tell you, but I'm sure they're trying their best."
+    ], "teach": [
+        "Okay class, simple day. Basics into potion mixing. Just toss in these ingredients and we'll go from there.",
+        "Good day class. Let's dive into intermediate studies of potions. Flip through the text book till you find...",
+        "If you're feeling confident, do touch on the advanced concepts of potion making. Just don't blow up the place please. Thank you.",
+        "uuuaahhhhh... Excuse me. Maybe a sleeping potion would be nice.",
+        "...And don't forget what I asked you to make for homework.....Zzz...",
+        "Today is a free day. Just turn in a viable product to get points.",
+        "Today you will be making a potion that makes you giggle. It should be a fun day, right?",
+        "You want to make something? Look, all I ask is that you don't burn the classroom down."
+    ], "failed": [
+        "I failed you as your teacher...",
+        "Close. You would need the other one for that mixture.",
+        "Did they not teach you guys anything?",
+        "Come on Lilith, you can do this. Let's try a diffrent approch instead.",
+        "Did you follow the textbook? Or was my instructions unclear?! Let me try to clarify anything confusing you.",
+        "Lucky for you, this didn't go up in flames. Lulu on the other hand...",
+        "...Zzz......Oh, what happened? Ah, you can just try again.",
+        "You can always try again, it's not the end of the world. But, Miss Elizabeth thinks otherwise.",
+        "If you need extra help you can always ask me. After all I am your teacher.",
+        "Oh Maeve. What am I going to do...",
+        "I tried... But I'll keep trying to help you guys, no matter what.",
+        "Close enough... I'll just give you credit this time."
     ]
     },
     "angelika": {"name": "Angelika - <:ang_uhh:972250143254536212>", "color": 0x262B42, "img": angel_pics, "pic_leng": 4, "greet": [
@@ -351,3 +436,92 @@ lulu_language = {
     "mrhban lulu": 'ah! hal targhab bialtawasul mae lulu aleazimati? ah, \'ajal {mention}! lak mutlaq alhuriyat fi suaali ean \'ayi shay\'in!',
     "annyeonghaseyo lulu": '하하하 {mention}! 여기서 뵙게 되어 반갑습니다! Lulu님, 그레이트를 보러 오셨나요? 무슨 생각 드시나요?'
 }
+
+expel_dial = (
+    "{mention}, you have done great harm to this academy. Thus, I concluded that you'll be petrified by my own hands. Goodbye.",
+    "{mention}, this behavior will not be tolerated. You are hereby permanently expelled from the academy. Good day.",
+    "{mention}, You will be executed for causing irreversable harm to my academy. Even though witches cannot die from decapitation, you are unfortunately human. The students will not be able to see or hear you and it will be painless. Goodbye {mention}.",
+    "{mention}, You are to never return to this academy. If you are to step foot here once again I will have to use force against you. I am feeling nicer today so I'm letting you off easy. Heed by my warning and you will get to see the light of day again. Good day.",
+    "{mention}, this behavior will not be tolerated. You are hereby permanently expelled from the academy. Good day.",
+    "{mention}, what you have done here is unforgivable. You will promptly be removed from this academy as I see fit. Whether you live or not will be up to how durable your body and will is.",
+    "{mention}, you are a danger to my students and I will not tolerate such depravity. As such, I, 'Maeve Midnight,' will swiftly erase you from existance as I deemed you a threat to the rest of society. You have no place here or anywhere else.",
+    "I hope the academy doesn't see your demise, {mention}. I will swiftly take care of you, as you have harmed my academy. Goodbye",
+    "{mention}, this behavior will not be tolerated. You are hereby permanently expelled from the academy. Good day."
+)
+ma_img = "https://images-ext-1.discordapp.net/external/vPYWVmNnHqvL6saMqb_3yMtdKzACtfTxl097ZPl3sfE/https/i.imgur.com/x5C3viN.png?format=webp&quality=lossless&width=648&height=648"
+
+# potions
+
+cel_potions = ("Strength", "Speed", "Invisibility", "Hair Growth", "Sleep", "Healing", "Love", "Blindness", "Intoxication", "Nail Growth", "Hydration", "Nutrition", "Explosion", "Levitation", "Fire Resistance", "Water Breathing", "Stone Skin", "Luck",
+               "Misfortune", "Truth", "Wisdom", "Calming", "Rage", "Fear", "Courage", "Charm", "Night Vision", "Clone", "Iron Skin", "Laughing", "Antidote", "Gender Swap", "Voice Deepening", "Voice Raising", "Mana", "Bone Growth", "Silence", "Berserk",
+               "Demon repellent", "Guthix Balance", "Energy", "Defence", "Goading", "Sanfew", "Stamina", "Saradomin", "Menaphite", "Kodai", "Dream", "Bravery", "Stink", "Inversion", "Sulphur", "Acid", "Fumigator", "Milk", "Breast Enhancement", "Size",
+               "amphetamine", "aphrodisiac", "Numbing", "Anesthesia", "Laxitive", "Depression", "Anti-Depressant", "Failed")
+
+pot_img = (
+    "https://oldschool.runescape.wiki/images/Imp_repellent.png?19317",
+    "https://oldschool.runescape.wiki/images/Attack_potion%284%29.png?758a9",
+    "https://oldschool.runescape.wiki/images/Antipoison%284%29.png?78f79",
+    "https://oldschool.runescape.wiki/images/Relicym%27s_balm%284%29.png?b11fe",
+    "https://oldschool.runescape.wiki/images/Strength_potion%284%29.png?a8970",
+    "https://oldschool.runescape.wiki/images/Serum_207_%284%29.png?462fd",
+    "https://oldschool.runescape.wiki/images/Compost_potion%284%29.png?2aac1",
+    "https://oldschool.runescape.wiki/images/Restore_potion%284%29.png?b11fe",
+    "https://oldschool.runescape.wiki/images/Guthix_balance%284%29.png?06911",
+    "https://oldschool.runescape.wiki/images/Blamish_oil.png?cab41",
+    "https://oldschool.runescape.wiki/images/Energy_potion%284%29.png?01f76",
+    "https://oldschool.runescape.wiki/images/Defence_potion%284%29.png?6b57c",
+    "https://oldschool.runescape.wiki/images/Agility_potion%284%29.png?a203e",
+    "https://oldschool.runescape.wiki/images/Combat_potion%284%29.png?43e7d",
+    "https://oldschool.runescape.wiki/images/Prayer_potion%284%29.png?219da",
+    "https://oldschool.runescape.wiki/images/Super_attack%284%29.png?ff13c",
+    "https://oldschool.runescape.wiki/images/Goblin_potion%284%29.png?4d1b1",
+    "https://oldschool.runescape.wiki/images/Superantipoison%284%29.png?57bdc",
+    "https://oldschool.runescape.wiki/images/Fishing_potion%284%29.png?2632b",
+    "https://oldschool.runescape.wiki/images/Super_energy%284%29.png?9cd45",
+    "https://oldschool.runescape.wiki/images/Shrink-me-quick.png?199d1",
+    "https://oldschool.runescape.wiki/images/Hunter_potion%284%29.png?7331d",
+    "https://oldschool.runescape.wiki/images/Goading_potion%284%29.png?4836f",
+    "https://oldschool.runescape.wiki/images/Super_strength%284%29.png?fa231",
+    "https://oldschool.runescape.wiki/images/Magic_essence%284%29.png?8bd5a",
+    "https://oldschool.runescape.wiki/images/Prayer_regeneration_potion%284%29.png?9baad",
+    "https://oldschool.runescape.wiki/images/Weapon_poison.png?43659",
+    "https://oldschool.runescape.wiki/images/Super_restore%284%29.png?9074d",
+    "https://oldschool.runescape.wiki/images/Sanfew_serum%284%29.png?7313d",
+    "https://oldschool.runescape.wiki/images/Super_defence%284%29.png?ff13c",
+    "https://oldschool.runescape.wiki/images/Antidote%2B%284%29.png?78f79",
+    "https://oldschool.runescape.wiki/images/Antifire_potion%284%29.png?38864",
+    "https://oldschool.runescape.wiki/images/Divine_super_attack_potion%284%29.png?e2602",
+    "https://oldschool.runescape.wiki/images/Divine_super_defence_potion%284%29.png?e2602",
+    "https://oldschool.runescape.wiki/images/Divine_super_strength_potion%284%29.png?e2602",
+    "https://oldschool.runescape.wiki/images/Ranging_potion%284%29.png?095ed",
+    "https://oldschool.runescape.wiki/images/Weapon_poison%2B.png?058f5",
+    "https://oldschool.runescape.wiki/images/Divine_ranging_potion%284%29.png?e2602",
+    "https://oldschool.runescape.wiki/images/Magic_potion%284%29.png?ed6d0",
+    "https://oldschool.runescape.wiki/images/Stamina_potion%284%29.png?717c8",
+    "https://oldschool.runescape.wiki/images/Zamorak_brew%284%29.png?37c64",
+    "https://oldschool.runescape.wiki/images/Divine_magic_potion%284%29.png?2c9d4",
+    "https://oldschool.runescape.wiki/images/Antidote%2B%2B%284%29.png?78f79",
+    "https://oldschool.runescape.wiki/images/Bastion_potion%284%29.png?e9754",
+    "https://oldschool.runescape.wiki/images/Battlemage_potion%284%29.png?3be33",
+    "https://oldschool.runescape.wiki/images/Saradomin_brew%284%29.png?c82f9",
+    "https://oldschool.runescape.wiki/images/Surge_potion%284%29.png?17b44",
+    "https://oldschool.runescape.wiki/images/Weapon_poison%2B%2B.png?77b8c",
+    "https://oldschool.runescape.wiki/images/Extended_antifire%284%29.png?b8cf0",
+    "https://oldschool.runescape.wiki/images/Ancient_brew%284%29.png?7fdd8",
+    "https://oldschool.runescape.wiki/images/Divine_bastion_potion%284%29.png?e2602",
+    "https://oldschool.runescape.wiki/images/Divine_battlemage_potion%284%29.png?2c9d4",
+    "https://oldschool.runescape.wiki/images/Anti-venom%284%29.png?38864",
+    "https://oldschool.runescape.wiki/images/Menaphite_remedy%284%29.png?b0b20",
+    "https://oldschool.runescape.wiki/images/Super_combat_potion%284%29.png?ff13c",
+    "https://oldschool.runescape.wiki/images/Forgotten_brew%284%29.png?6600c",
+    "https://oldschool.runescape.wiki/images/Super_antifire_potion%284%29.png?320fe",
+    "https://oldschool.runescape.wiki/images/Anti-venom%2B%284%29.png?1f712",
+    "https://oldschool.runescape.wiki/images/Extended_anti-venom%2B%284%29.png?481c2",
+    "https://oldschool.runescape.wiki/images/Divine_super_combat_potion%284%29.png?cb9aa",
+    "https://oldschool.runescape.wiki/images/Extended_super_antifire%284%29.png?97fe8",
+    "https://oldschool.runescape.wiki/images/Vial_of_blood.png?4afbb",
+    "https://oldschool.runescape.wiki/images/Coconut_milk.png?09bb0",
+    "https://oldschool.runescape.wiki/images/Magic_potion%284%29.png?ed6d0",
+    "https://oldschool.runescape.wiki/images/Anchovy_oil.png?ec289",
+    "https://oldschool.runescape.wiki/images/Anti-venom%284%29.png?38864"
+)
