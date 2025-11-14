@@ -103,15 +103,17 @@ pot_img = characters.pot_img
 cel_potions = characters.cel_potions
 
 class PotionMixer(View,):
-    def __init__(self, user: str, name: str, color: str, fail: str, *, timeout: int = 60):
+    def __init__(self, user: str, name: str, color: str, fail: str, img: str, *, timeout: int = 60):
         super().__init__(timeout=timeout)
         self.user = user
         self.name = name
         self.color = color
         self.count = 0
         self.fail = fail
+        self.img = img
 
-        self.ingred = ( "Bainberry", "Bee's Brain", "Blueleaf", "Cat-trap Flower", "Darknut", "Dragonwort", "Frog's Tears", "Bugle Shell", "Feather of Crow", "Honeysuckle", "Mandrake Root", "Nightshade", "Slug's Eggs", "Yarrow Root", "Moonrock")
+        self.ingred = ("Bainberry", "Bee's Brain", "Blueleaf", "Cat-trap Flower", "Darknut", "Dragonwort", "Frog's Tears",
+                       "Bugle Shell", "Feather of Crow", "Honeysuckle", "Mandrake Root", "Nightshade", "Slug's Eggs", "Yarrow Root", "Moonrock")
         picked_ingred = []
         self.selected = 0
 
@@ -138,12 +140,13 @@ class PotionMixer(View,):
             bitmask = self.selected
             if self.count == 3:
                 if bitmask in index_lookup:
-                    embed = discord.Embed(title=self.name+" Mixed A...", description='\"*' + cel_potions[index_lookup[bitmask]] + " Potion!"+'*\"', colour=color)
+                    embed = discord.Embed(title=self.name+" Mixed A...", description='\"*' +
+                                          cel_potions[index_lookup[bitmask]] + " Potion!"+'*\"', colour=color)
                     embed.set_thumbnail(url=pot_img[index_lookup[bitmask]])
                 else:
                     embed = discord.Embed(
-                        title=self.name+"Failed Potion Mix", description='\"*'+self.fail+'*\"', colour=color)
-                    embed.set_thumbnail(url=pot_img[65])
+                        title=self.name+" Failed Mixing A Potion", description='\"*'+self.fail+'*\"', colour=color)
+                    embed.set_thumbnail(url=self.img)
 
                 await interaction.message.edit(view=None)
                 await interaction.channel.send(embed=embed)
@@ -169,7 +172,9 @@ class PotionMixer(View,):
 
             row_items += 1
 
+
 teachers = ("maeve", "celine", "lilith", "agnes")
+
 
 @bot.tree.command(name="potion", description="Concoct your own potion!")
 @app_commands.guilds(discord.Object(id=DEV_GUILD_ID), discord.Object(id=MAEVE_GUILD_ID))
@@ -191,7 +196,9 @@ async def game(interaction: discord.Interaction):
     fail = characters.char_library[name]["failed"]
     fail_len = len(fail)
     fail_processed = fail[random.randint(0, fail_len)]
-    view = PotionMixer(user_id, user, color, fail_processed, timeout=60)
+    pic_len = len(pic)
+    pic_process = pic[random.randint(0, pic_len)]
+    view = PotionMixer(user_id, user, color, fail_processed, pic_process, timeout=60)
     await interaction.channel.send(embed=embed, view=view)
 
 # reaction messages
@@ -334,6 +341,7 @@ if paps == check:
 else
     import witching.powers.exe
 '''
+
 
 
 
