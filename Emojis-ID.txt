@@ -1,10 +1,347 @@
-<:lu_khu:971274776993730611> 
-<:el_dafuk:971938013775036458> 
-<:ag_what:1139410327411372082> 
-<:ce_yeps:1177389031055700128> 
-<:ma_smile:1285178007761453057> 
-<:ja_happy:972245318269825046> 
-<:ar_fear:1193115969724350464> 
-<:an_wawawa:971938323490799678> 
-<:li_happy:1430168122626801795> 
-<:ang_uhh:972250143254536212>
+import discord
+from discord.ext import commands
+from discord import app_commands
+import logging
+from dotenv import load_dotenv
+import os
+import random
+import characters
+import re
+from discord.ui import Button, View
+
+load_dotenv()
+token = os.getenv('DISCORD_TOKEN')
+
+handler = logging.FileHandler(
+    filename='discord.log', encoding='utf-8', mode='w')
+intents = discord.Intents.default()
+intents.message_content = True
+intents.members = True
+
+bot = commands.Bot(command_prefix='!', intents=intents)
+
+# checks if bot is active and syncs any commands to guild id
+
+DEV_GUILD_ID = 1315069563280556072
+MAEVE_GUILD_ID = 959668492800524308
+
+GUILDS = [discord.Object(id=DEV_GUILD_ID), discord.Object(id=MAEVE_GUILD_ID)]
+
+
+@bot.event
+async def on_ready():
+    print(f"{bot.user.name} is ready")
+
+    try:
+        for guild in GUILDS:
+            synced = await bot.tree.sync(guild=guild)
+            print(f"Synced {len(synced)} commands to guild {guild.id}")
+    except Exception as e:
+        print(f"❌ Error syncing commands: {e}")
+
+# embed function
+
+
+def embed_func(char, msg, color, char_img, img_leng):
+    embed = discord.Embed(
+        title=char, description='\"*' + msg+'*\"', colour=color)
+    embed.set_thumbnail(url=char_img[random.randint(0, img_leng)])
+    return embed
+
+
+blacklist = ["faggot", "fag", "nigger", "nigga", "trannie", "tranny", "kill yourself", "kys"
+             "negro", "chicano", "chicana", "heil hitler", "cuck", "retard", "niga", "rape"]
+
+# handler function to add readbility
+
+
+def Char_handler(content, name, speech, color, img, img_leng):
+    if any(phrase in content for phrase in (blacklist)):
+        return
+    else:
+        embed = embed_func(name, speech, color, img, img_leng)
+        return embed
+
+# channeling command
+
+
+@app_commands.choices(
+    character=[
+        app_commands.Choice(name="Lulu", value="lulu"),
+        app_commands.Choice(name="Elizabeth", value="elizabeth"),
+        app_commands.Choice(name="Agnes", value="agnes"),
+        app_commands.Choice(name="Céline", value="celine"),
+        app_commands.Choice(name="Maeve", value="maeve"),
+        app_commands.Choice(name="Jade", value="jade"),
+        app_commands.Choice(name="Arthur", value="arthur"),
+        app_commands.Choice(name="Annie", value="annie"),
+        app_commands.Choice(name="Lilith", value="lilith"),
+        app_commands.Choice(name="Angelika", value="angelika"),
+        app_commands.Choice(name="Dahlia", value="dahlia"),
+        app_commands.Choice(name="Elena", value="elena"),
+        app_commands.Choice(name="MollyBot", value="mollybot")
+    ]
+)
+@bot.tree.command(name="channel", description="Speak their tounge")
+@app_commands.guilds(discord.Object(id=DEV_GUILD_ID), discord.Object(id=MAEVE_GUILD_ID))
+async def channel(interaction: discord.Interaction, character: app_commands.Choice[str], speech: str):
+    await interaction.response.send_message("Working on it...", ephemeral=True)
+
+    content = speech.lower()
+
+    name = characters.char_library[character.value]["name"]
+    color = characters.char_library[character.value]["color"]
+    pic = characters.char_library[character.value]["img"]
+    leng = characters.char_library[character.value]["pic_leng"]
+
+    embed = Char_handler(content, name, speech, color, pic, leng)
+
+    await interaction.channel.send(embed=embed)
+
+# potion maker command
+
+pot_img = characters.pot_img
+cel_potions = characters.cel_potions
+index_lookup = characters.index_lookup
+
+class PotionView(discord.ui.view):
+    def __init__(self, parent):
+        super().__init__(timeout=None)
+        for ingredient in parent.ingred:
+            self.add_item(PotionButton(ingredient, parent))            
+
+class PotionButton(discord.ui.button):
+    def __init__(self, ingredient, row_count, parent):
+        super().__init__(label=ingredient, style=discord.ButtonStyle.gray, row=row_count)
+        self.ingredient = ingredient
+        self.row_count = row_count
+        self.parent = parent
+
+    async def callback(self, interaction):
+        await self.parent.mix(interaction, self.ingredient)
+
+class PotionMixer(View):
+    def __init__(self, user: str, name: str, color: str, fail: str, img: str, *, timeout: int = 60):
+        super().__init__(timeout=timeout)
+        self.user = user
+        self.name = name
+        self.color = color
+        self.count = 0
+        self.fail = fail
+        self.img = img
+
+        self.ingred = ("Bainberry", "Bee's Brain", "Blueleaf", "Cat-trap Flower", "Darknut", "Dragonwort", "Frog's Tears",
+                       "Bugle Shell", "Feather of Crow", "Honeysuckle", "Mandrake Root", "Nightshade", "Slug's Eggs", "Yarrow Root", "Moonrock")
+        picked_ingred = []
+        self.selected = 0
+
+        # button logic
+        async def option(interaction: discord.Interaction, indgredient: str, ingrednum: int):
+            picked = indgredient
+            index = ingrednum
+            if interaction.user.id != int(self.user):
+                await interaction.response.send_message("You can make your own potion using /potion!", ephemeral=True)
+                return
+
+            if picked in picked_ingred:
+                await interaction.response.send_message("You already mixed this ingredient!", ephemeral=True)
+                return
+
+            picked_ingred.append(picked)
+            self.count += 1
+
+            self.selected |= (1 << index)
+
+            bitmask = self.selected
+            if self.count == 3:
+                if bitmask in index_lookup:
+                    embed = discord.Embed(title=self.name+" Mixed A...", description='\"*' +
+                                          cel_potions[index_lookup[bitmask]] + " Potion!"+'*\"', colour=color)
+                    embed.set_thumbnail(url=pot_img[index_lookup[bitmask]])
+                else:
+                    embed = discord.Embed(
+                        title=self.name+" Failed Mixing A Potion", description='\"*'+self.fail+'*\"', colour=color)
+                    embed.set_thumbnail(url=self.img)
+
+                await interaction.message.edit(view=None)
+                await interaction.channel.send(embed=embed)
+
+            await interaction.response.defer()
+
+        # create embed with buttons
+        row_items = 0
+        row_count = 0
+        for i in range(len(self.ingred)):
+            if row_items == 5:
+                row_count += 1
+                row_items = 0
+
+            buttn = discord.ui.Button(
+                label=self.ingred[i], style=discord.ButtonStyle.gray, row=row_count)
+            ingredient = self.ingred[i]
+
+            async def callback(interaction, ingredient=ingredient, ingrednum=i):
+                await option(interaction, ingredient, ingrednum)
+            buttn.callback = callback
+            self.add_item(buttn)
+
+            row_items += 1
+
+
+teachers = ("maeve", "celine", "lilith", "agnes")
+
+
+@bot.tree.command(name="potion", description="Concoct your own potion!")
+@app_commands.guilds(discord.Object(id=DEV_GUILD_ID), discord.Object(id=MAEVE_GUILD_ID))
+async def game(interaction: discord.Interaction):
+    await interaction.response.defer()
+    name = teachers[random.randint(0, 4)]
+    char_name = characters.char_library[name]["name"]
+    color = characters.char_library[name]["color"]
+    pic = characters.char_library[name]["img"]
+    leng = characters.char_library[name]["pic_leng"]
+    content = ""
+    speech = characters.char_library[name]["teach"]
+    speech_len = len(speech)
+    embed = Char_handler(content, char_name + " - Potion Mixing Class", speech[random.randint(0, speech_len)], color, pic, leng)
+
+    user_id = str(interaction.user.id)
+    user = str(interaction.user.global_name)
+    fail = characters.char_library[name]["failed"]
+    fail_len = len(fail)
+    fail_processed = fail[random.randint(0, fail_len)]
+    pic_len = len(pic)
+    pic_process = pic[random.randint(0, pic_len)]
+    view = PotionMixer(user_id, user, color, fail_processed, pic_process, timeout=60)
+    view = PotionView()
+    await interaction.followup.send(embed=embed, view=view)
+
+# reaction messages
+char_nicknames = {
+    "lulu": ["lulu the booboo"],
+    "elizabeth": ["liz", "four eyes"],
+    "agnes": ["aggy"],
+    "celine": [],
+    "maeve": [],
+    "jade": [],
+    "arthur": [],
+    "annie": ["ann"],
+    "lilith": ["lily"],
+    "angelika": ["angel"],
+    "dahlia": [],
+    "elena": [],
+    "mollybot": []
+}
+listen = ("hii", "haii", "hey", "how are you", "hello", "howdy",
+          "greetings", "morning", "afternoon", "evening")
+bye_listen = ("bye", "goodbye", "take care", "see you later",
+              "see ya", "later", "cya", "night", "farewell", "goodnight")
+updt_listen = ("when update", "update when", "when is the update", "is the update out", "is update out", "next update",
+               "update out yet", "updated yet", "is it updated", "has it updated", "did the update", "update soon", "update coming", "update plz", "update pls", "when patch", "patch when", "is there an update", "did update come out", "has the update come out", "update come yet", "new update when", "new patch when", "did they update", "have they updated", "update already", "bro update when", "still no update", "update now")
+
+
+def get_name(content: str):
+    msg = content.lower()
+    for name, nickname_list in char_nicknames.items():
+        for nick in nickname_list:
+            if nick and nick in msg:
+                return name, nick
+    for name in char_nicknames.keys():
+        if name in msg:
+            return name, None
+    return None, None
+
+
+def response(content, msg):
+    name, nick = get_name(content)
+    if nick and re.search(rf"\b{re.escape(nick)}\b", content):
+        greeting_type = "nick"
+    elif any(phrase in content for phrase in listen):
+        greeting_type = "greet"
+    elif any(phrase in content for phrase in bye_listen):
+        greeting_type = "bye"
+    else:
+        return
+
+    char_name = characters.char_library[name]["name"]
+    color = characters.char_library[name]["color"]
+    picture = characters.char_library[name]["img"]
+    length = len(characters.char_library[name][(greeting_type)])
+    img_length = characters.char_library[name]["pic_leng"]
+    greetings = characters.char_library[name][greeting_type]
+
+    embed = embed_func(char_name, greetings[random.randint(0, length)].format(
+        mention=msg.author.mention, value=random.randint(0, 99)), color, picture, img_length)
+    return embed
+
+
+def lulu_response(content, msg):
+    lulu_lang = characters.lulu_language
+    if any(phrase in content for phrase in (lulu_lang)):
+        for lang in lulu_lang:
+            if lang in content:
+                lulu_pics = characters.lulu_pics
+                embed = embed_func("Luna K. Lutz - <:lu_khu:971274776993730611>",
+                                   lulu_lang[lang].format(mention=msg.author.mention), 0x8B463C, lulu_pics, 5)
+                return embed
+
+
+def updt_response(content, msg):
+    if any(phrase in content for phrase in updt_listen):
+        name = random.choice(list(char_nicknames.keys()))
+        char_name = characters.char_library[name]["name"]
+        color = characters.char_library[name]["color"]
+        picture = characters.char_library[name]["img"]
+        img_length = characters.char_library[name]["pic_leng"]
+        length = len(characters.char_library[name]["updt"])
+        greetings = characters.char_library[name]["updt"]
+        embed = embed_func(char_name, greetings[random.randint(0, length)].format(
+            mention=msg.author.mention, value=random.randint(0, 99)), color, picture, img_length)
+        return embed
+
+
+expel_dial = characters.expel_dial
+
+
+@bot.event
+async def on_message(msg):
+    if msg.author == bot.user:
+        return
+
+    # lulu language
+    embed = lulu_response(msg.content.lower(), msg)
+    if embed:
+        await msg.channel.send(embed=embed)
+        return
+
+    # respond to key words and name
+    embed = response(msg.content.lower(), msg)
+    if embed:
+        await msg.channel.send(embed=embed)
+        return
+
+    # when update
+    embed = updt_response(msg.content.lower(), msg)
+    if embed:
+        await msg.channel.send(embed=embed)
+        return
+
+     # expulsion
+    get_ban = msg.embeds[0]
+    title = get_ban.title
+    desc = get_ban.description
+    match = re.search(r'\d{17,19}', desc)
+    if match:
+        user_id = int(match.group(0))
+        name = f"<@{user_id}>"
+    if title == "Ban Result:" or title == "Kick Result:":
+        embed = discord.Embed(title="Maeve - <:ma_smile:1285178007761453057>",  description='\"*' +
+                              expel_dial[random.randint(0, 8)].format(mention=name)+'*\"', color=0x4C2F35)
+        embed.set_thumbnail(url=characters.ma_img)
+        await msg.channel.send(embed=embed)
+        return
+
+    await bot.process_commands(msg)
+
+
+bot.run(token, log_handler=handler, log_level=logging.DEBUG)
