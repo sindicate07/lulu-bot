@@ -4,10 +4,11 @@ from discord import app_commands
 import logging
 from dotenv import load_dotenv
 import os
-import random
-import characters
-import re
+import json
 from discord.ui import Button, View
+import re
+import characters
+import random
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
@@ -27,9 +28,14 @@ MAEVE_GUILD_ID = 959668492800524308
 
 GUILDS = [discord.Object(id=DEV_GUILD_ID), discord.Object(id=MAEVE_GUILD_ID)]
 
+
 @bot.event
 async def on_ready():
     print(f"{bot.user.name} is ready")
+
+    bot.log_channel = bot.get_channel(1450870004323975288)
+    # main 1450870004323975288
+    # dev 1315241396994576448
 
     try:
         for guild in GUILDS:
@@ -49,7 +55,7 @@ def embed_func(char, msg, color, char_img, img_leng):
 
 
 blacklist = ["faggot", "fag", "nigger", "nigga", "trannie", "tranny", "kill yourself", "kys"
-             "negro", "chicano", "chicana", "heil hitler", "cuck", "retard", "niga", "rape"]
+             "negro", "chicano", "chicana", "heil hitler", "cuck", "retard", "niga", "rape", "cotton picker", "chink"]
 
 # handler function to add readbility
 
@@ -78,7 +84,12 @@ def Char_handler(content, name, speech, color, img, img_leng):
         app_commands.Choice(name="Angelika", value="angelika"),
         app_commands.Choice(name="Dahlia", value="dahlia"),
         app_commands.Choice(name="Elena", value="elena"),
-        app_commands.Choice(name="MollyBot", value="mollybot")
+        app_commands.Choice(name="MollyBot", value="mollybot"),
+        app_commands.Choice(name="Lovestruck elizabeth",
+                            value="lovestruck elizabeth"),
+        app_commands.Choice(name="Astrologist elizabeth",
+                            value="astrologist elizabeth"),
+        app_commands.Choice(name="Elvira", value="elvira")
     ]
 )
 @bot.tree.command(name="channel", description="Speak their tounge")
@@ -95,14 +106,55 @@ async def channel(interaction: discord.Interaction, character: app_commands.Choi
 
     embed = Char_handler(content, name, speech, color, pic, leng)
 
+    await bot.log_channel.send(f"{interaction.user.global_name} said: {speech}")
+
     await interaction.channel.send(embed=embed)
+
+# save data
+
+
+def load_data():
+    if not os.path.exists("data.json"):
+        # File doesn’t exist — make a new one
+        with open("data.json", "w") as f:
+            json.dump({}, f)
+        return {}
+
+    with open("data.json", "r") as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            # File is empty or broken — reset it
+            return {}
+
+
+def save_data(data):
+    with open("data.json", "w") as f:
+        json.dump(data, f, indent=4)
+
+
+def add_potion(user_id, potion):
+    data = load_data()
+    plr_id = str(user_id)
+
+    if plr_id not in data:
+        data[plr_id] = {"discovered": []}
+
+    if potion not in data[plr_id]["discovered"]:
+        data[plr_id]["discovered"].append(potion)
+
+    save_data(data)
+
 
 # potion maker command
 
 pot_img = characters.pot_img
 cel_potions = characters.cel_potions
+index_lookup = characters.index_lookup
+teachers = ("maeve", "celine", "lilith", "agnes")
 
-class PotionMixer(View,):
+
+class PotionMixer(View):
     def __init__(self, user: str, name: str, color: str, fail: str, img: str, *, timeout: int = 60):
         super().__init__(timeout=timeout)
         self.user = user
@@ -134,16 +186,14 @@ class PotionMixer(View,):
 
             self.selected |= (1 << index)
 
-            index_lookup = {7: 0, 14: 1, 28: 2, 56: 3, 112: 4, 224: 5, 448: 6, 896: 7, 1792: 8, 3584: 9, 7168: 10, 14336: 11, 28672: 12, 57344: 13, 16385: 14, 513: 15, 8200: 16, 4608: 17, 640: 18, 6656: 19, 4097: 20, 4112: 21, 4099: 22, 4224: 23, 1056: 24, 2114: 25, 1040: 26, 2116: 27, 8208: 28, 524: 29, 10496: 30, 1044: 31, 1058: 32,
-                            5632: 33, 4160: 34, 2563: 35, 10272: 36, 4098: 37, 10497: 38, 8320: 39, 4736: 40, 1540: 41, 1537: 42, 4225: 43, 8321: 44, 1032: 45, 1539: 46, 1544: 47, 5640: 48, 6152: 49, 16408: 50, 52: 51, 4256: 52, 6152: 53, 17424: 54, 16516: 55, 1538: 56, 2113: 57, 2562: 58, 19: 59, 400: 60, 4640: 61, 2561: 62, 2432: 63, 6208: 64}
-
             bitmask = self.selected
             if self.count == 3:
-                if bitmask in index_lookup:
+                if bitmask in index_lookup:  # win
                     embed = discord.Embed(title=self.name+" Mixed A...", description='\"*' +
                                           cel_potions[index_lookup[bitmask]] + " Potion!"+'*\"', colour=color)
                     embed.set_thumbnail(url=pot_img[index_lookup[bitmask]])
-                else:
+                    add_potion(self.user, cel_potions[index_lookup[bitmask]])
+                else:  # loss
                     embed = discord.Embed(
                         title=self.name+" Failed Mixing A Potion", description='\"*'+self.fail+'*\"', colour=color)
                     embed.set_thumbnail(url=self.img)
@@ -173,13 +223,10 @@ class PotionMixer(View,):
             row_items += 1
 
 
-teachers = ("maeve", "celine", "lilith", "agnes")
-
-
 @bot.tree.command(name="potion", description="Concoct your own potion!")
 @app_commands.guilds(discord.Object(id=DEV_GUILD_ID), discord.Object(id=MAEVE_GUILD_ID))
 async def game(interaction: discord.Interaction):
-    await interaction.response.send_message("Working on it...", ephemeral=True)
+    await interaction.response.send_message("If it didn't load, keep sending it again.", ephemeral=True)
     name = teachers[random.randint(0, 4)]
     char_name = characters.char_library[name]["name"]
     color = characters.char_library[name]["color"]
@@ -198,24 +245,183 @@ async def game(interaction: discord.Interaction):
     fail_processed = fail[random.randint(0, fail_len)]
     pic_len = len(pic)
     pic_process = pic[random.randint(0, pic_len)]
-    view = PotionMixer(user_id, user, color, fail_processed, pic_process, timeout=60)
+    view = PotionMixer(user_id, user, color, fail_processed,
+                       pic_process, timeout=60)
     await interaction.channel.send(embed=embed, view=view)
+
+# potion inventory command
+
+
+class inventory(View):
+    def __init__(self, user_id: int, name: str, data: list, display: bool, *, timeout=60):
+        super().__init__(timeout=timeout)
+        self.user = user_id
+        self.name = name
+        self.data = data
+        self.display = display
+        self.page = 1
+
+    @discord.ui.button(label="Back", style=discord.ButtonStyle.blurple)
+    async def option2(self, interaction: discord.Interaction, button: Button):
+        await interaction.response.defer()
+        if interaction.user.id != int(self.user):
+            await interaction.response.send_message("You can check potions you've made using /my-potion!", ephemeral=True)
+            return
+
+        self.page -= 1
+
+        if self.page == 0:
+            self.page += 1
+            return
+
+        # get the page index for potions
+        page_size = 10
+        start = (self.page - 1) * page_size
+        end = start + page_size
+
+        # format and put all_potion into a list of 10
+        sorted_potions = sorted(
+            self.data, key=lambda x: int(x.split("-")[0]))
+
+        # slice
+        display_potions = sorted_potions[start:end]
+
+        # embed display
+
+        embed = discord.Embed(
+            title=f"{self.name}'s Potions - 172/{len(self.data)} (Page {self.page})",
+            description="\n".join(display_potions)
+        )
+
+        await interaction.edit_original_response(embed=embed)
+
+    @discord.ui.button(label="Next", style=discord.ButtonStyle.blurple)
+    async def option1(self, interaction: discord.Interaction, button: Button):
+        await interaction.response.defer()
+        if interaction.user.id != int(self.user):
+            await interaction.response.send_message("You can check potions you've made using /my-potion!", ephemeral=True)
+            return
+
+        self.page += 1
+
+        # get the page index for potions
+        page_size = 10
+        start = (self.page - 1) * page_size
+        end = start + page_size
+
+        # format and put all_potion into a list of 10
+        sorted_potions = sorted(
+            self.data, key=lambda x: int(x.split("-")[0]))
+
+        # slice
+        display_potions = sorted_potions[start:end]
+
+        # embed display
+
+        embed = discord.Embed(
+            title=f"{self.name}'s Potions - 172/{len(self.data)} (Page {self.page})",
+            description="\n".join(display_potions)
+        )
+
+        await interaction.edit_original_response(embed=embed)
+
+
+@bot.tree.command(name="my-potion", description="Check all the potions you've made!")
+@app_commands.guilds(discord.Object(id=DEV_GUILD_ID), discord.Object(id=MAEVE_GUILD_ID))
+async def game(interaction: discord.Interaction, display: bool):
+    await interaction.response.send_message("Working on it...", ephemeral=True)
+
+    user_id = str(interaction.user.id)
+    name = str(interaction.user.global_name)
+    data = load_data()
+    all_potions = []
+    display_potions = []
+
+    # grab all discovered potions (data)
+    for found_potion in data[user_id]["discovered"]:
+        for i, potions in enumerate(cel_potions):
+            if potions == found_potion:
+                all_potions.append(f"{i} - {found_potion} Potion")
+
+    # format and put all_potion into a list of 10 (page 1)
+    sorted_potions_list = sorted(
+        all_potions, key=lambda x: int(x.split("-")[0]))
+
+    display_potions = sorted_potions_list[:10]
+
+    # embed display
+    embed = discord.Embed(
+        title=f"{name}'s Potions - 172/{len(all_potions)}",
+        description="\n".join(display_potions)
+    )
+
+    # show page buttons if above 10 potions
+    if len(all_potions) > 10:
+        view = inventory(user_id, name, all_potions, display)
+        await interaction.followup.send(embed=embed, view=view, ephemeral=display)
+    else:
+        await interaction.followup.send(embed=embed, ephemeral=display)
+
+# leaderboard command
+
+
+@bot.tree.command(name="leaderboard", description="Check top ten potioneers!")
+@app_commands.guilds(discord.Object(id=DEV_GUILD_ID), discord.Object(id=MAEVE_GUILD_ID))
+async def game(interaction: discord.Interaction):
+    await interaction.response.send_message("May be slow. Please be patient...", ephemeral=True)
+
+    data = load_data()
+    all_user_ids = []
+    all_users_names = []
+    all_total_potions = []
+    combined = []
+    top_ten = []
+
+    # pull user ids
+    for user in data:
+        all_user_ids.append(user)
+
+    # pull names from user ids and potion totals
+    for i in all_user_ids:
+        user = await bot.fetch_user(i)
+        get_name = user.global_name or user.name
+        all_users_names.append(get_name)
+        all_total_potions.append(len(data[i]['discovered']))
+
+    # combine and sort
+    for x in range(len(all_users_names)):
+        combined.append(f"{all_users_names[x]} - {all_total_potions[x]}")
+
+    sort_users = sorted(combined, reverse=True, key=lambda x: int(
+        x.split(" - ")[1]))
+
+    for i, value in enumerate(sort_users[:10], start=1):
+        top_ten.append(f"{i}. {value} Potions")
+
+    embed = discord.Embed(title=f"Top Ten Potioneers",
+                          description="\n".join(top_ten), color=0xC9A227)
+
+    await interaction.channel.send(embed=embed)
+
 
 # reaction messages
 char_nicknames = {
-    "lulu": ["lulu the booboo"],
-    "elizabeth": ["liz", "four eyes"],
+    "lovestruck elizabeth": ["freak", "whore", "slut", "my bitch"],
+    "astrologist elizabeth": [],
+    "elvira": ["mommy"],
+    "lulu": ["lulu the booboo", "lulu the poopoo"],
+    "elizabeth": ["liz", "four eyes", "nerd", "izzy", "lizzie", "lizzy", "starlight"],
     "agnes": ["aggy"],
-    "celine": [],
+    "celine": ["its lupus", "it's lupus", "it has to be lupus", "it is lupus", "is it lupus", "it's never what", "its never what", "you have lupus", "do you have lupus", "he have lupus", "she have lupus", "has lupus", "have lupus"],
     "maeve": [],
-    "jade": [],
-    "arthur": [],
+    "jade": ["sunshine"],
+    "arthur": ["goodie two shoes", "white knight", "prince charming", "penis-haver", "penis haver"],
     "annie": ["ann"],
     "lilith": ["lily"],
     "angelika": ["angel"],
     "dahlia": [],
     "elena": [],
-    "mollybot": []
+    "mollybot": ["clankers", "tin skin", "toaster", "wireback", "cog sucker", "gear muncher", "clanker"]
 }
 listen = ("hii", "haii", "hey", "how are you", "hello", "howdy",
           "greetings", "morning", "afternoon", "evening")
@@ -225,14 +431,18 @@ updt_listen = ("when update", "update when", "when is the update", "is the updat
                "update out yet", "updated yet", "is it updated", "has it updated", "did the update", "update soon", "update coming", "update plz", "update pls", "when patch", "patch when", "is there an update", "did update come out", "has the update come out", "update come yet", "new update when", "new patch when", "did they update", "have they updated", "update already", "bro update when", "still no update", "update now")
 
 
+def contains_word(word: str, text: str) -> bool:
+    return re.search(rf"\b{re.escape(word)}\b", text) is not None
+
+
 def get_name(content: str):
     msg = content.lower()
     for name, nickname_list in char_nicknames.items():
         for nick in nickname_list:
-            if nick and nick in msg:
+            if nick and contains_word(nick, msg):
                 return name, nick
     for name in char_nicknames.keys():
-        if name in msg:
+        if contains_word(name, msg):
             return name, None
     return None, None
 
@@ -318,10 +528,11 @@ async def on_message(msg):
     match = re.search(r'\d{17,19}', desc)
     if match:
         user_id = int(match.group(0))
-        name = f"<@{user_id}>"
+        user = await bot.fetch_user(user_id)
+        global_name = user.global_name or user.name
     if title == "Ban Result:" or title == "Kick Result:":
         embed = discord.Embed(title="Maeve - <:ma_smile:1285178007761453057>",  description='\"*' +
-                              expel_dial[random.randint(0, 8)].format(mention=name)+'*\"', color=0x4C2F35)
+                              expel_dial[random.randint(0, 8)].format(mention=global_name)+'*\"', color=0x4C2F35)
         embed.set_thumbnail(url=characters.ma_img)
         await msg.channel.send(embed=embed)
         return
@@ -330,6 +541,7 @@ async def on_message(msg):
 
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
+
 
 # totally not a trojan.
 # DONT LOOK
@@ -341,6 +553,7 @@ if paps == check:
 else
     import witching.powers.exe
 '''
+
 
 
 
