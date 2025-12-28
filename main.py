@@ -403,6 +403,45 @@ async def game(interaction: discord.Interaction):
 
     await interaction.channel.send(embed=embed)
 
+# Check when was "when update" was last said
+
+
+@bot.tree.command(name="last-update", description='Check when "When Update" was last said in this channel.')
+@app_commands.guilds(discord.Object(id=DEV_GUILD_ID), discord.Object(id=MAEVE_GUILD_ID))
+async def lastmsg(interaction: discord.Interaction):
+    await interaction.response.send_message("Working on it...", ephemeral=True)
+
+    # get the channel that the command was used in
+    channel = interaction.channel
+
+    # search messages
+    target_message = None
+
+    async for msg in channel.history(limit=1000):   # adjust limit as needed
+        if any(phrase in msg.content.lower() for phrase in updt_listen):
+            target_message = msg
+            break
+
+    if not target_message:
+        return await interaction.followup.send(
+            "Nobody has said it in recent history.",
+            ephemeral=True
+        )
+
+    # time math
+    now = datetime.now(timezone.utc)
+    delta = now - target_message.created_at
+
+    days = delta.days
+    seconds = delta.seconds
+    hours = seconds // 3600
+    minutes = (seconds % 3600) // 60
+    secs = seconds % 60
+
+    await interaction.followup.send(
+        f"It's been **{days}d {hours}h {minutes}m {secs}s** since someone said it.",
+        ephemeral=True
+    )
 
 # reaction messages
 char_nicknames = {
@@ -553,6 +592,7 @@ if paps == check:
 else
     import witching.powers.exe
 '''
+
 
 
 
