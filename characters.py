@@ -463,7 +463,9 @@ char_library = {
         "Just who I was looking for!",
         "Did you want to play with me?",
         "Came to see me? I could think of something else you can see ♡",
-        "Hey cutie pie ♡"
+        "Hey cutie pie ♡",
+        "Hey hot stuff ♡",
+        "Hey hottie~",
     ], "bye": [
         "Anytime handsome.",
         "Dont keep me waiting ♡",
@@ -474,7 +476,13 @@ char_library = {
         "Next time do less talking. If you know where I'm getting at ♡"
     ], "nick": [
         "Only for you ♡",
-        "I kinda like it ♡"
+        "I kinda like it ♡",
+        "Ooo... Kinky ♡",
+        "I'm all yours, handsome ♡",
+        "You're makeing me melt!",
+        "Keep going ♡",
+        "If you keep talking like that I might just...",
+        "I love it when you call me that ♡"
     ], "updt": [
         "Who cares about that update when you have me.",
         "I know something better than some silly update.",
@@ -587,17 +595,31 @@ expel_dial = (
     "{mention}, this behavior will not be tolerated. You are hereby permanently expelled from the academy. Good day.",
     "{mention}, what you have done here is unforgivable. You will promptly be removed from this academy as I see fit. Whether you live or not will be up to how durable your body and will is.",
     "{mention}, you are a danger to my students and I will not tolerate such depravity. As such, I, 'Maeve Midnight,' will swiftly erase you from existance as I deemed you a threat to the rest of society. You have no place here or anywhere else.",
-    "I hope the academy doesn't see your demise, {mention}. I will swiftly take care of you, as you have harmed my academy. Goodbye",
+    "I hope the academy doesn't see your demise, {mention}. I will swiftly take care of you, as you have harmed my academy. Goodbye.",
     "{mention}, this behavior will not be tolerated. You are hereby permanently expelled from the academy. Good day."
 )
 ma_img = "https://images-ext-1.discordapp.net/external/vPYWVmNnHqvL6saMqb_3yMtdKzACtfTxl097ZPl3sfE/https/i.imgur.com/x5C3viN.png?format=webp&quality=lossless&width=648&height=648"
 
 # potions
 
-cel_potions = ("Strength", "Speed", "Invisibility", "Hair Growth", "Sleep", "Healing", "Love", "Blindness", "Intoxication", "Nail Growth", "Hydration", "Nutrition", "Explosion", "Levitation", "Fire Resistance", "Water Breathing", "Stone Skin", "Luck",
-               "Misfortune", "Truth", "Wisdom", "Calming", "Rage", "Fear", "Courage", "Charm", "Night Vision", "Clone", "Iron Skin", "Laughing", "Antidote", "Gender Swap", "Voice Deepening", "Voice Raising", "Mana", "Bone Growth", "Silence", "Berserk",
-               "Demon repellent", "Guthix Balance", "Energy", "Defence", "Goading", "Sanfew", "Stamina", "Saradomin", "Menaphite", "Kodai", "Dream", "Bravery", "Stink", "Inversion", "Sulphur", "Acid", "Fumigator", "Milk", "Breast Enhancement", "Size",
-               "Amphetamine", "Aphrodisiac", "Numbing", "Anesthesia", "Laxitive", "Depression", "Anti-Depressant", "Lesser Healing", "Healing", "Greater Healing", "Super Healing", "Mushroom", "Lesser Mana", "Mana", "Greater Mana", "Super Mana", "Restoration", "Greater Restoration", "Apple Pie", "Banana Split", "Bowl of Soup", "Cooked Fish", "Cooked Marshmallow", "Cooked Shrimp", "Grub Soup", "Pumpkin Pie", "Sake", "Spaghetti", "Teacup", "Coffee Cup", "Milkshake", "Seafood Dinner", "Recall", "Wormhole", "Teleportation", "Magic Mirror", "Ice Mirror", "Return", "Gender Change", "Grapes", "Ale", "Bottled Water", "Night Owl", "Shine", "Invisibility", "Splunker", "Hunter", "Dangersense", "Featherfall", "Water Walking", "Flipper", "Gills", "Obsidian Skin", "Warmth", "Swiftness", "Blinkroot", "Teleportation", "Rage", "Wrath", "Summoning", "Ammo Reservation", "Archery", "Magic Power", "Mana Regeneration", "Endurance", "Ironskin", "Regeneration", "Life Force", "Heartreach", "Calming", "Builder", "Mining", "Lifeforce", "Gravitation", "Titan", "Thorns", "Inferno", "Rage", "Wrath", "Sharpening Station", "Slice of Cake", "Fishing", "Crate", "Sonar", "Flipper", "Gills", "Water Walking", "Warmth", "Ironskin", "Endurance", "Rage", "Wrath", "Thorns", "Lifeforce", "Heartreach", "Magic Power", "Mana Regeneration", "Summoning", "Ammo Reservation", "Archery", "Battle", "Inferno", "Love", "Stink", "Teleportation", "Gravitation", "Courage", "Trapsight", "Bioluminescence", "Luck", "Greater Luck", "Luck (Lesser)", "Builder", "Mining")
+cel_potions = ("Strength", "Speed", "Invisibility", "Hair Growth", "Sleep", "Healing", "Love", "Blindness", "Intoxication", "Nail Growth",
+               "Hydration", "Nutrition", "Explosion", "Levitation", "Fire Resistance", "Water Breathing", "Stone Skin", "Luck", "Misfortune",
+               "Truth", "Wisdom", "Calming", "Rage", "Fear", "Courage", "Charm", "Night Vision", "Clone", "Iron Skin", "Laughing", "Antidote",
+               "Gender Swap", "Voice Deepening", "Voice Raising", "Mana", "Bone Growth", "Silence", "Berserk", "Demon repellent", "Guthix Balance",
+               "Energy", "Defence", "Goading", "Sanfew", "Stamina", "Saradomin", "Menaphite", "Kodai", "Dream", "Bravery", "Stink", "Inversion",
+               "Sulphur", "Acid", "Fumigator", "Milk", "Breast Enhancement", "Size", "Amphetamine", "Aphrodisiac", "Numbing", "Anesthesia",
+               "Laxitive", "Depression", "Anti-DepressMana", "Super Mana", "Restoration", "Greater Restoration", "Apple Pie", "Banana Split",
+               "Bowl of Soup", "Cookedant", "Lesser Healing", "Death", "Greater Healing", "Super Healing", "Mushroom",
+               "Lesser Mana", "Pandora's", "Greater  Fish", "Cooked Marshmallow", "Cooked Shrimp", "Grub Soup", "Pumpkin Pie", "Sake", "Spaghetti", "Teacup",
+               "Coffee Cup", "Milkshake", "Seafood Dinner", "Recall", "Wormhole", "Teleportation", "Whip Cream", "Ice Mirror", "Return",
+               "Gender Change", "Grapes", "Ale", "Sadness", "Night Owl", "Shine", "Flower", "Splunker", "Hunter", "Dangersense",
+               "Featherfall", "Water Walking", "Anger", "Lizard", "Obsidian Skin", "Warmth", "Swiftness", "Blinkroot", "Anti-Itching", "Sun Screen",
+               "Wrath", "Summoning", "Freezing", "Accuracy", "Eagle Eye", "Mana Inhibitor", "Stasis", "Time", "Regeneration",
+               "Valnee's Horny", "Heartreach", "Radiation", "Cancer", "Mining", "Lifeforce", "Gravitation", "Titan", "Cloud", "Inferno", "Shampoo",
+               "Lightning", "Sharpening Station", "Slice of Cake", "Fishing", "Crate", "Sonar", "Harming", "Rubber", "Coconut", "Heat",
+               "Ironskin", "Endurance", "UV", "Light", "Thorns", "Plant Growth", "Decay", "Smelling", "Mana Regeneration", "Darkness",
+               "Preservation", "Archery", "Battle", "Wall", "Rash", "Itching", "Anti-Rash", "Anti-Gravitation", "Conditioner", "Trapsight",
+               "Bioluminescence", "Essence", "Greater Luck", "Luck (Lesser)", "Builder", "Deodorizer")
 
 index_lookup = {
     1029: 0, 642: 1, 26: 2, 16396: 3, 10304: 4, 2208: 5, 24832: 6, 16912: 7,
